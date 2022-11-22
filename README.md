@@ -1,5 +1,8 @@
 # bazaar-list-frontend
 
+```
+This the front end to my web technology project parhamrahmani/MyWebTechProject
+```
 ## Project setup
 ```
 npm install
