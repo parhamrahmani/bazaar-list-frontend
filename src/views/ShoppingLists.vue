@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
@@ -56,7 +57,6 @@ export default {
       redirect: 'follow'
     }
 
-    console.log('in mounted')
     fetch('http://localhost:8080/api/v1/products', requestProducts)
       .then(response => response.json())
       .then(result => result.forEach(product => { this.products.push(product) }))

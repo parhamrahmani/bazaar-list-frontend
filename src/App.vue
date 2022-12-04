@@ -10,7 +10,7 @@ export default {
 }</script>
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Ubuntu",Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -28,5 +28,10 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+@font-face {
+  font-family: "Ubuntu";
+  src: local("Ubuntu"),
+  url(./fonts/Ubuntu-Medium.ttf) format("truetype");
 }
 </style>

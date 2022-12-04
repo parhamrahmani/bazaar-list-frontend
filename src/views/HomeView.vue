@@ -1,21 +1,33 @@
+
 <template>
-  <div class="home" >
-    <img alt="Vue logo" src="../assets/logotrans.png"
-         height="100"
-         width="400"
-    >
-    <HelloWorld msg="Hello World!" />
-  </div>
+  <div>&nbsp;</div>
+  <img alt="Vue logo" src="../assets/logotrans.png"
+       height="60"
+       width="250"
+       style="align-content: center"
+  >
+  <ListForm></ListForm>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+<script type="text/javascript">
+import CollapseBars from '@/components/CollapseBars'
+import DynamicTable from '@/components/DynamicTable'
+import ListForm from '@/components/ListForm'
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+
+  /* eslint-disable */
+  name: 'ShoppingListView',
+  components:{ CollapseBars , DynamicTable , ListForm},
+  data () {
+    return {
+      lists: [
+
+      ],
+      products: [
+      ]
+    }
+  },}
 </script>
+
+<style scoped>
+</style>

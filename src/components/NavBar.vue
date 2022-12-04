@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg" style="background-color: white; ">
+  <nav class="navbar navbar-expand-lg" style="background-color: olivedrab; ">
     <div class="container-fluid">
 
-      <router-link class="navbar-brand" href="#" style="color: darkgreen" to="/">
+      <router-link class="navbar-brand" href="#" style="color: white" to="/">
         Bazzar List</router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
               aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,7 +11,6 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
        <!--   <a class="nav-link active" aria-current="page" href="#" style="color: olivedrab" >Home</a> -->
-          <router-link class= "nav-link" to="/shoppingListMaker">Make a Shopping List</router-link>
           <!--   <a class="nav-link active" aria-current="page" href="#" style="color: olivedrab" >My Lists</a> -->
           <router-link class= "nav-link" to="/lists">Lists</router-link>
         </div>
