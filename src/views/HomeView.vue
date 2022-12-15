@@ -1,23 +1,31 @@
 
 <template>
+
   <div>&nbsp;</div>
-  <img alt="Vue logo" src="../assets/logotrans.png"
-       height="60"
-       width="250"
-       style="align-content: center"
-  >
-  <ListForm></ListForm>
+<section>
+   <img alt="Vue logo" src="../assets/logotrans.png"
+        height="60"
+        width="250"
+        style="align-content: center"
+   >
+  <div>&nbsp;</div>
+  <div>&nbsp;</div><div>&nbsp;</div>
+  <div>&nbsp;</div>
+   <ListForm>
+   </ListForm>
+   <div>
+   </div>
+</section>
 </template>
 
 <script type="text/javascript">
-import CollapseBars from '@/components/CollapseBars'
-import DynamicTable from '@/components/DynamicTable'
 import ListForm from '@/components/ListForm'
+import ResponsiveTable from '@/components/ResponsiveTable'
 export default {
 
   /* eslint-disable */
   name: 'ShoppingListView',
-  components:{ CollapseBars , DynamicTable , ListForm},
+  components:{ ListForm, ResponsiveTable},
   data () {
     return {
       lists: [
@@ -30,4 +38,7 @@ export default {
 </script>
 
 <style scoped>
+p {
+  background-image: url('../assets/logotrans.png');
+}
 </style>
