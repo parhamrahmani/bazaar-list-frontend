@@ -1,69 +1,98 @@
 /* eslint-disable */
 <template>
-  <div>
-  <h4 style="text-align: left">         List id : {{ latestList.listId }}
-  </h4>
-    <h4 style="text-align: left">List Name:  {{latestList.listName}}</h4>
-    <h5 style="text-align: left"> List Description: {{latestList.description}}</h5>
-    <div>&nbsp;</div>
-
-    <table class="table" >
-
-      <thead>
-      <tr>
-        <th scope="col">Product Id</th>
-        <th scope="col">Product Name</th>
-        <th scope="col">Brand</th>
-        <th scope="col">Category</th>
-      </tr>
-      </thead>
-      <tbody>
-     <tr  v-for="product in products" :key="product.id">
-      </tr>
-      </tbody>
-    </table>
-    <div>&nbsp;</div>
-  </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
+  <h3 class="mb-2 display-5 fw-bold">Load A Shopping List</h3>
+          <div class="fixTableHead" style="overflow:auto; max-height:500px; margin: 150px">
+            <h5>All Shopping Lists</h5>
+            <div class="fixTableHead">
+              <table>
+                <thead>
+                <tr>
+                  <th>List Id</th>
+                  <th>List Name</th>
+                  <th>Description</th>
+                  <th>Options</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="list in lists" :key="list.id">
+                  <td>{{ list.listId }}</td>
+                  <td> {{ list.listName }} </td>
+                  <td> {{ list.description }}</td>
+                  <td> <button type="button" class="btn btn-primary" style="margin: 5px">Primary</button>
+                    <button type="button" class="btn btn-secondary">Secondary</button> </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 </template>
 
 <script>
 /* eslint-disable */
-import ResponsiveTable from '@/components/ResponsiveTable'
+import SingleShoppingListView from '@/components/SingleShoppingListView'
 export default {
   name: 'ShoppingLists',
-  components:{
-    ResponsiveTable
-  },
+  components: {SingleShoppingListView},
   data () {
-    return {
-      lists: [
-      ],
-      products: [
-      ],
-     latestList: Object }},
+   return {
+     lists : [],
+     products : [],
+     selectedId : Number
+   }
+  },
+  methods:{
+    fetchProductsForListById(id) {
+      const request = {
+        method: 'GET',
+        redirect: 'follow'
+      }
+      fetch('http://localhost:8080/api/v1/shoppingLists/getProductsByShoppingListId/'+id, request)
+        .then(response => response.json())
+        .then(result => this.products.push(result))
+        .catch(error => console.log('error', error))
+    },
+
+  },
   mounted () {
     const request = {
       method: 'GET',
       redirect: 'follow'
     }
-    fetch('http://localhost:8080/api/v1/products', request)
-      .then(response => response.json())
-      .then(result => result.forEach(product => { this.products.push(product) }))
-      .catch(error => console.log('error', error))
 
     fetch('http://localhost:8080/api/v1/shoppingLists', request)
       .then(response => response.json())
-      .then(result => result.forEach(list => { this.lists.push(list) }))
-      .catch(error => console.log('error', error))
-
-    fetch('http://localhost:8080/api/v1/shoppingLists/getTheLatestList',request)
-      .then(response => response.json())
-      .then(result => this.latestList = result)
+      .then(result => this.lists = result)
       .catch(error => console.log('error', error))
   }
+
 }
 </script>
 
 <style scoped>
-
+table,tr,th,td{
+  border:1px solid #dddddd;
+  border-collapse:collapse;
+}
+.fixTableHead {
+  overflow-y: auto;
+  height: 700px;
+}
+.fixTableHead thead th {
+  position: sticky;
+  top: 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  padding: 8px 15px;
+  border: 2px solid #529432;
+}
+th {
+  background: #ABDD93;
+}
 </style>

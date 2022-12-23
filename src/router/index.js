@@ -6,7 +6,7 @@ import ShoppingLists from '@/views/ShoppingLists'
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: '',
     component: HomeView
   },
   {

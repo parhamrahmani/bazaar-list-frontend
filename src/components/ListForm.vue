@@ -1,21 +1,5 @@
 <template>
  <section>
-  <head>
-    <meta charset="UTF-8">
-    <title>Bootstrap 5 generator example page</title>
-
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet"
-          href=" https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css ">
-    <link rel="stylesheet"
-          href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-    <!-- Plugins -->
-  </head>
   <body>
   <section class="pt-5 pb-5">
     <div class="container">
@@ -27,23 +11,31 @@
         <div class="col-md-6">
           <h3 class="display-5 mt-2 fw-bold">Make A Shopping List</h3>
           <p>Make a grocery list before shopping</p>
-          <form class="form">
+          <form class="form needs-validation" novalidate>
             <div class="form-group mb-4">
               <input type="text" class="form-control" id="listname"
                      placeholder="Enter a name for your list"
                      v-model="listName" required>
             </div>
+            <div id="validationListName" class="invalid-feedback">
+              Please enter a list name
+            </div>
             <div class="form-group mb-4">
                 <textarea class="form-control" id="message" name="message"
                           rows="3" placeholder="Type a description"
-                v-model="description"></textarea>
+                v-model="description" required></textarea>
+
+            </div>
+            <div>
+              <button id = "button" class="btn btn-primary"  v-if="this.listName === ''" @click="addList(); getTheLatestList()">
+                Create A Shopping List
+              </button>
+              <!-- Button trigger modal -->
+              <router-link type="button" class="btn btn-primary" to="/addProduct" v-if="this.listName !== ''"   @click="addList(); getTheLatestList()">
+                Create A Shopping List
+              </router-link>
             </div>
           </form>
-          <div>
-            <router-link class="btn btn-primary"  type="button"  to="/addProduct" @click="addList(); getTheLatestList()">
-              Create A Shopping List
-            </router-link>
-          </div>
         </div>
       </div>
     </div>
@@ -67,8 +59,16 @@ export default {
     }
   },
 methods:     {
+
+  /**
+   *
+   */
+
   addList(){
+    const valid = this.validate();
+    if(valid){
     const endpoint = 'http://localhost:8080/api/v1/shoppingLists'
+      if(this.listName !== ""){
     const data = {
       listName: this.listName,
       description: this.description
@@ -85,7 +85,12 @@ methods:     {
       {console.log(data)})
       .catch(error => console.log('error', error) )
 this.getTheLatestList()
-  },
+  }}},
+
+  /**
+   *
+   */
+
   getTheLatestList(){
     const request = {
       method: 'GET',
@@ -96,6 +101,11 @@ this.getTheLatestList()
       .then(result => this.latestList = result)
       .catch(error => console.log('error', error))
     },
+
+  /**
+   *
+   */
+
   getListById(){
     const request = {
       method: 'GET',
@@ -106,8 +116,37 @@ this.getTheLatestList()
       .then(response => response.json())
       .then(result => this.latestList = result)
       .catch(error => console.log('error', error))
-  }
-  }
+  },
+
+  /**
+   *
+   */
+
+  /**
+   * @description validates the input values
+   */
+
+  validate(){
+    let valid = true
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          valid = false
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+    return valid
+  },
+}
+
   }
 </script>
 

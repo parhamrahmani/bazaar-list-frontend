@@ -16,6 +16,9 @@
     "bootstrap": "^5.2.3",
     "composition-api": "^0.0.0",
     "core-js": "^3.26.1",
+    "html2pdf.js": "^0.10.1",
+    "vue-html2pdf": "^1.8.0",
+    "vue-pdf-print": "^4.2.0",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
   },
