@@ -16,12 +16,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="list in lists" :key="list.id">
+                <tr v-for="list in lists" :key="list.id" >
                   <td>{{ list.listId }}</td>
                   <td> {{ list.listName }} </td>
                   <td> {{ list.description }}</td>
-                  <td> <button type="button" class="btn btn-primary" style="margin: 5px">Primary</button>
-                    <button type="button" class="btn btn-secondary">Secondary</button> </td>
+                  <td>     <router-link :to="'/list/' + list.listId">
+                    <button type="button" class="btn btn-primary">Load</button>
+                  </router-link></td>
                 </tr>
                 </tbody>
               </table>
@@ -31,7 +32,7 @@
 
 <script>
 /* eslint-disable */
-import SingleShoppingListView from '@/components/SingleShoppingListView'
+import SingleShoppingListView from '@/views/SingleShoppingListView'
 export default {
   name: 'ShoppingLists',
   components: {SingleShoppingListView},
@@ -44,6 +45,7 @@ export default {
   },
   methods:{
     fetchProductsForListById(id) {
+
       const request = {
         method: 'GET',
         redirect: 'follow'
@@ -53,6 +55,7 @@ export default {
         .then(result => this.products.push(result))
         .catch(error => console.log('error', error))
     },
+
 
   },
   mounted () {

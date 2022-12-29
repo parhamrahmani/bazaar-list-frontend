@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="card" style="width: 30rem; margin: 0 auto;text-align: center">
-        <h5 class="card-header">Add Products To Your Shopping List</h5>
+        <h5 class="card-header">Add Products</h5>
         <form class="needs-validation" novalidate>
           <div>&nbsp;</div>
           <div class="form-group">
@@ -64,29 +64,8 @@
               Please enter a category
             </div>
           </div>
-          <button class="btn w-85  btn-lg mt-4 btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"
-                  style="margin: 8px">
-            Edit A Product in Your List
-          </button>
           <button type="submit"
                   class="btn w-85 btn-lg mt-4 btn-primary" style="margin: 8px" @click="addProduct">Add a Product</button>
-
-          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasExampleLabel">Edit A Product In Your List</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <label for="productName">Select A Product</label>
-              <select class="form-select" aria-label="Default select example" v-model="selectedId" style="margin: 5px"
-              >
-                <option v-for="product in products" :key="product.id" :value="product.id"> Product Id : {{product.id }} --> Product Name:  {{product.productName}}</option>
-              </select>
-              <div>&nbsp;</div>
-
-              <EditProductModal :selectedId="selectedId"></EditProductModal>
-            </div>
-          </div>
         </form>
       </div>
     </div>
@@ -98,37 +77,38 @@
         <table class="table table-borderless">
           <thead>
           <tr>
+            <th scope="col">#</th>
             <th scope="col">Product Id</th>
             <th scope="col">Product Name</th>
             <th scope="col">Product Brand</th>
             <th scope="col">Category</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Unit</th>
             <th scope="col">Options</th>
           </tr>
           </thead>
           <tbody>
-          <tr  v-for="product in products" :key="product.id">
+          <tr  v-for="(product,index) in products" :key="product.id">
+            <th> {{ index + 1 }}</th>
             <th>{{ product.id}}</th>
             <td>{{product.productName}}</td>
             <td>{{product.brand}}</td>
             <td>{{product.category}}</td>
-            <td>
-              <input type="number" class="form-control" id="inputMenge" size="2" min="0" max="1000" value="0" style="text-align: center">
-            </td>
-            <td>
-              <select class="form-select" aria-label="Default select example" id="inputUnit">
-                <option selected>Select Unit </option>
-                <option>x</option>
-                <option>Kg</option>
-                <option>Liter</option>
-              </select>
-            </td>
               <td>
-              <button type="button" class="btn btn-danger" @click="deleteProduct(product.id)">Delete</button>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" :data-bs-target="'#offcanvasExample' + index" aria-controls="offcanvasExample">Edit</button>
+                  <button type="button" class="btn btn-danger"  @click="deleteProduct(product.id)">Delete</button>
+                </div>
+                <div class="offcanvas offcanvas-start" tabindex="-1" :id="'offcanvasExample' + index" aria-labelledby="offcanvasExampleLabel">
+                  <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasLabel">Edit Product {{ product.id }} In Your List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                  </div>
+                  <div class="offcanvas-body">
+                    <div>&nbsp;</div>
+                    <EditProductModal :selectedId="product.id"></EditProductModal>
+                  </div>
+                </div>
             </td>
           </tr>
-
           </tbody>
         </table>
       </div>
@@ -136,16 +116,41 @@
       </div>
     </div>
   </div>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+Show The Final Shopping List  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Your Final List</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <FinalList v-bind:list="latestList">
+          </FinalList>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>
 
 <script>
 /* eslint-disable */
 import EditProductModal from '@/components/EditProductModal'
+import FinalList from '@/components/FinalList'
 
 export default {
   /* eslint-disable */
   name: 'ResponsiveTable',
-  components:{ EditProductModal},
+  components:{ EditProductModal, FinalList},
   data (){
     return{
       products: [],
@@ -158,7 +163,9 @@ export default {
       editedProductName:'',
       editedProductBrand: '',
       editedProductCategory: '',
-      selectedId : Number
+      selectedId : Number,
+      selectedAmount : Number,
+      selectedUnit : String
     } },
   methods: {
 
@@ -318,10 +325,37 @@ export default {
     }))
     .catch(error => console.log('error', error))
 }}
-
 </script>
 
 
 <style scoped>
 .card {display:inline-block;}
+.modal.fade {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+}
+
+.modal-dialog {
+  width: 1600px;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+}
+.modal-body {
+  max-height: none;
+  overflow-y: visible;
+}
+.modal {
+  width: 1600px;
+}
 </style>

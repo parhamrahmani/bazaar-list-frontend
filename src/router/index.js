@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductAddView from '@/views/ProductAddView'
 import ShoppingLists from '@/views/ShoppingLists'
+import SingleShoppingListView from '@/views/SingleShoppingListView'
 
 const routes = [
   {
@@ -22,7 +23,11 @@ const routes = [
     path: '/addProduct',
     name: 'productAdd',
     component: ProductAddView
-  }
+  },
+    {
+      path: '/list/:listId',
+      component: SingleShoppingListView
+    }
 ]
 
 const router = createRouter({
