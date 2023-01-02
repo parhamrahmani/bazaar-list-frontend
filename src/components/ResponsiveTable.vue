@@ -5,76 +5,11 @@
   <div>&nbsp;</div>
   <div>&nbsp;</div>
   <div class="row">
-    <div class="col-sm-4">
-      <div class="card" style="width: 30rem; margin: 0 auto;text-align: center">
-        <h5 class="card-header">Add Products</h5>
-        <form class="needs-validation" novalidate>
-          <div>&nbsp;</div>
-          <div class="form-group">
-            <label class="input-group-text-col-sm-3" id="addon-wrapping" for="productName">Product Name</label>
-          </div>
-          <div>
-            <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Name" aria-label="Username"
-                   aria-describedby="addon-wrapping" id="productName" v-model="productName" style="margin: 5px ; width: 420px"
-                   required>
-            <div id="productNameFeedback" class="invalid-feedback">
-              Please enter a product name
-            </div>
-          </div>
-          <div>&nbsp;</div>
-          <div class="form-group">
-            <label class="input-group-text-col-sm-3" id="addon-wrapping2" for="ProductBrand">Product Brand</label>
-          </div>
-          <div>
-            <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Brand" aria-label="Username"
-                   aria-describedby="addon-wrapping2" id="productBrand" v-model="productBrand" style="margin: 5px ;
-                    width: 420px" required>
-            <div id="productBrandFeedback" class="invalid-feedback">
-              Please enter a brand
-            </div>
-          </div>
-          <div>
-            <div>&nbsp;</div>
-            <label for="inputCategory" class="form-label-col-sm-6" style="margin: 5px">Category</label>
-            <select class="form-select" aria-label="Default select example" id="inputCategory" v-model="productCategory"
-                    style="margin-left: 30px;width: 420px" required>
-              <option>Vegetables</option>
-              <option>Baking</option>
-              <option>Fruit</option>
-              <option>Beverage</option>
-              <option>Bread</option>
-              <option>Breakfast</option>
-              <option>Dry</option>
-              <option>Sweets</option>
-              <option>Snack</option>
-              <option>Canned</option>
-              <option>Foodstuff</option>
-              <option>Condiment</option>
-              <option>Dairy</option>
-              <option>Health</option>
-              <option>Coffee</option>
-              <option>Tea</option>
-              <option>Frozen</option>
-              <option>Home</option>
-              <option>Pet</option>
-              <option>Baby</option>
-              <option>Other</option>
-            </select>
-            <div id="productCategoryFeedback" class="invalid-feedback">
-              Please enter a category
-            </div>
-          </div>
-          <button type="submit"
-                  class="btn w-85 btn-lg mt-4 btn-primary" style="margin: 8px" @click="addProduct">Add a Product</button>
-        </form>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="card" style="width: 65rem; margin: 0 auto">
         <div class="card-header">
-          <h5> {{latestList.listName}} </h5>
+          <h5> {{ latestList.listName }} </h5>
         </div>
-        <table class="table table-borderless">
+    <form class="form needs-validation" novalidate>
+        <table class="table" style="margin: 32px; width: 97%">
           <thead>
           <tr>
             <th scope="col">#</th>
@@ -94,10 +29,12 @@
             <td>{{product.category}}</td>
               <td>
                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" :data-bs-target="'#offcanvasExample' + index" aria-controls="offcanvasExample">Edit</button>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas"
+                          :data-bs-target="'#offcanvasExample' + index" aria-controls="offcanvasExample">Edit</button>
                   <button type="button" class="btn btn-danger"  @click="deleteProduct(product.id)">Delete</button>
                 </div>
-                <div class="offcanvas offcanvas-start" tabindex="-1" :id="'offcanvasExample' + index" aria-labelledby="offcanvasExampleLabel">
+                <div class="offcanvas offcanvas-start" tabindex="-1" :id="'offcanvasExample' + index"
+                     aria-labelledby="offcanvasExampleLabel">
                   <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasLabel">Edit Product {{ product.id }} In Your List</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -109,20 +46,72 @@
                 </div>
             </td>
           </tr>
+          <tr class="input-row">
+            <th></th>
+            <th></th>
+            <td>
+              <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Name" aria-label="Username"
+                     aria-describedby="addon-wrapping" id="productName" v-model="productName" style="margin: 5px ;
+                     width: 420px" required>
+              <div id="productNameFeedback" class="invalid-feedback">
+                Please enter a product name
+              </div>
+            </td>
+            <td>
+              <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Brand" aria-label="Username"
+                     aria-describedby="addon-wrapping2" id="productBrand" v-model="productBrand" style="margin: 5px ;
+                    width: 420px" required>
+              <div id="productBrandFeedback" class="invalid-feedback">
+                Please enter a brand
+              </div>
+            </td>
+            <td>
+              <select class="form-select" aria-label="Default select example" id="inputCategory"
+                      v-model="productCategory" style="margin-left: 30px;width: 420px" required>
+                <option>Vegetables</option>
+                <option>Baking</option>
+                <option>Fruit</option>
+                <option>Beverage</option>
+                <option>Bread</option>
+                <option>Breakfast</option>
+                <option>Dry</option>
+                <option>Sweets</option>
+                <option>Snack</option>
+                <option>Canned</option>
+                <option>Foodstuff</option>
+                <option>Condiment</option>
+                <option>Dairy</option>
+                <option>Health</option>
+                <option>Coffee</option>
+                <option>Tea</option>
+                <option>Frozen</option>
+                <option>Home</option>
+                <option>Pet</option>
+                <option>Baby</option>
+                <option>Other</option>
+              </select>
+              <div id="productCategoryFeedback" class="invalid-feedback">
+                Please enter a category
+              </div>
+            </td>
+            <td>
+              <button type="submit"
+                      class="btn btn-primary" @click="addProduct" >Add a Product</button>
+            </td>
+          </tr>
           </tbody>
         </table>
-      </div>
-      <div>
-      </div>
-    </div>
+    </form>
   </div>
+  <div>&nbsp;</div>
+  <div>&nbsp;</div>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 Show The Final Shopping List  </button>
 
   <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
-  >
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+       aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -139,7 +128,6 @@ Show The Final Shopping List  </button>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -199,7 +187,9 @@ export default {
           .then(result => console.log(result))
           .then(result => this.products.push(result))
           .catch(error => console.log('error', error));
-      } }
+          window.location.reload()
+
+        } }
     },
 
     /**
@@ -329,15 +319,12 @@ export default {
 
 
 <style scoped>
-.card {display:inline-block;}
 .modal.fade {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-
 }
-
 .modal-dialog {
   width: 1600px;
   height: 100%;
@@ -346,7 +333,6 @@ export default {
   align-items: center;
   justify-content: center;
 }
-
 .modal-content {
   width: 100%;
   height: 100%;
@@ -357,5 +343,8 @@ export default {
 }
 .modal {
   width: 1600px;
+}
+.input-row {
+  border: 1px solid black;
 }
 </style>

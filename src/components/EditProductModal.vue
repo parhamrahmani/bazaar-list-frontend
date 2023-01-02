@@ -24,9 +24,8 @@
     <div>&nbsp;</div>
 
     <label for="inputCategory" class="form-label">Category</label>
-    <select class="form-select" aria-label="Default select example" id="inputCategory" v-model="editedProductCategory"
-    required>
-      <option>Vegetables</option>
+    <select class="form-select" aria-label="Default select example" id="inputCategory" v-model="editedProductCategory">
+      <option >Vegetables</option>
       <option>Baking</option>
       <option>Fruit</option>
       <option>Beverage</option>

@@ -5,18 +5,22 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 ">
-          <img src="https://www.eatwell101.com/wp-content/uploads/2012/02/A-Beginner%E2%80%99s-Shopping-List.jpg" alt=" https://dummyimage.com/660x450/ccc/ffffff"
+          <img src="https://www.eatwell101.com/wp-content/uploads/2012/02/A-Beginner%E2%80%99s-Shopping-List.jpg"
+               alt=" https://dummyimage.com/660x450/ccc/ffffff"
                class="img-fluid m-shadow-16 rounded shadow">
         </div>
         <div class="col-md-6">
-          <h3 class="display-5 mt-2 fw-bold">Make A Shopping List</h3>
-          <p>Make a grocery list before shopping</p>
-          <form class="form needs-validation" novalidate>
-            <div class="form-group mb-4">
-              <input type="text" class="form-control" id="listname"
-                     placeholder="Enter a name for your list"
-                     v-model="listName" required>
-            </div>
+          <h3 class="display-5 mt-2 fw-bold">
+            Make A Shopping List
+          </h3>
+           <p>Make a grocery list before shopping</p>
+             <form class="form needs-validation" novalidate>
+               <div class="form-group mb-4">
+                 <input type="text" class="form-control" id="listname"
+                        placeholder="Enter a name for your list"
+                        v-model="listName"
+                        required>
+               </div>
             <div id="validationListName" class="invalid-feedback">
               Please enter a list name
             </div>
@@ -27,11 +31,13 @@
 
             </div>
             <div>
-              <button id = "button" class="btn btn-primary"  v-if="this.listName === ''" @click="addList(); getTheLatestList()">
+              <button id = "button" class="btn btn-primary"
+                      v-if="this.listName === ''" @click="addList(); getTheLatestList()">
                 Create A Shopping List
               </button>
               <!-- Button trigger modal -->
-              <router-link type="button" class="btn btn-primary" to="/addProduct" v-if="this.listName !== ''"   @click="addList(); getTheLatestList()">
+              <router-link type="button" class="btn btn-primary" to="/addProduct"
+                           v-if="this.listName !== ''"   @click="addList(); getTheLatestList()">
                 Create A Shopping List
               </router-link>
             </div>

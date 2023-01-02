@@ -1,33 +1,84 @@
 /* eslint-disable */
 <template>
+  <form class="form needs-validation" novalidate>
   <div>&nbsp;</div>
   <div>&nbsp;</div>
-  <h3 class="mb-2 display-5 fw-bold">Load A Shopping List</h3>
-          <div class="fixTableHead" style="overflow:auto; max-height:500px; margin: 150px">
-            <h5>All Shopping Lists</h5>
-            <div class="fixTableHead">
-              <table>
-                <thead>
-                <tr>
-                  <th>List Id</th>
-                  <th>List Name</th>
-                  <th>Description</th>
-                  <th>Options</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="list in lists" :key="list.id" >
-                  <td>{{ list.listId }}</td>
-                  <td> {{ list.listName }} </td>
-                  <td> {{ list.description }}</td>
-                  <td>     <router-link :to="'/list/' + list.listId">
-                    <button type="button" class="btn btn-primary">Load</button>
-                  </router-link></td>
-                </tr>
-                </tbody>
-              </table>
+  <h4>Load A Shopping List</h4>
+  <div class="table-container">
+    <table class="table table-bordered table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>List Id</th>
+        <th>List Name</th>
+        <th>Description</th>
+        <th>Options</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- Add your table rows and cells here -->
+      <tr v-for="(list,index) in lists" :key="list.id" >
+        <td>{{ index + 1 }}</td>
+        <td>{{ list.listId }}</td>
+        <td> {{ list.listName }} </td>
+        <td> {{ list.description }}</td>
+        <td>
+          <router-link :to="'/list/' + list.listId">
+          <button type="button" class="btn btn-primary">
+            Load
+          </button>
+        </router-link>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                  :data-bs-target= "'#staticBackdrop' + index ">
+            Edit
+          </button>
+          <!-- Modal -->
+          <div class="modal fade" :id="'staticBackdrop'+index" data-bs-backdrop="static" data-bs-keyboard="false"
+               tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit List {{list.listId}}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form class="form needs-validation" novalidate>
+                    <div class="form-group mb-4">
+                      <input type="text" class="form-control" id="listname"
+                             placeholder="Please enter a new list name"
+                             v-model="editedListName" required>
+                    </div>
+                    <div id="validationListName" class="invalid-feedback">
+                      Please enter a list name
+                    </div>
+                    <div class="form-group mb-4">
+                <textarea class="form-control" id="message" name="message"
+                          rows="3" placeholder="Please enter a new list description"
+                          v-model="editedDescription" required></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="button" class="btn btn-primary" @click="editList(list.listId)"
+                          data-bs-dismiss="modal">
+                    Save Changes
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+          <button type="button" class="btn btn-danger" @click="deleteList(list.listId)">Delete</button>
+        </td>
+      </tr>
+      <!-- Add more rows here -->
+      </tbody>
+    </table>
+  </div>
+  </form>
 </template>
 
 <script>
@@ -40,23 +91,76 @@ export default {
    return {
      lists : [],
      products : [],
-     selectedId : Number
+     selectedId : Number,
+     editedDescription : '',
+     editedListName : ''
    }
   },
   methods:{
-    fetchProductsForListById(id) {
+    /**
+     * @description updates/edits the selected list
+     * @param id --> the id of the list to be updated
+     */
 
-      const request = {
-        method: 'GET',
+   editList(id){
+      const valid = this.validate()
+      if(valid){
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+      "listName" : this.editedListName,
+        "description" : this.editedDescription
+      });
+        if(this.editedListName !== "" && this.editedDescription !== ""){
+      const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
         redirect: 'follow'
-      }
-      fetch('http://localhost:8080/api/v1/shoppingLists/getProductsByShoppingListId/'+id, request)
+      };
+      fetch("http://localhost:8080/api/v1/shoppingLists/"+id, requestOptions)
         .then(response => response.json())
-        .then(result => this.products.push(result))
-        .catch(error => console.log('error', error))
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+          window.location.reload()
+        }}},
+    /***
+     * @description deletes the selected shopping list
+     * @param id --> id of the list to be deleted
+     */
+
+    deleteList(id){
+      const requestOptions = {
+        method: 'DELETE',
+        redirect: 'follow'
+      };
+      fetch('http://localhost:8080/api/v1/shoppingLists/' + id, requestOptions)
+        .then(response => response.json())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+      window.location.reload()
+
     },
+    validate(){
+      let valid = true
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
 
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            valid = false
+            event.preventDefault()
+            event.stopPropagation()
+          }
 
+          form.classList.add('was-validated')
+        }, false)
+      })
+      return valid
+    }
   },
   mounted () {
     const request = {
@@ -74,28 +178,15 @@ export default {
 </script>
 
 <style scoped>
-table,tr,th,td{
-  border:1px solid #dddddd;
-  border-collapse:collapse;
+.table-container {
+  height: 650px; /* Set the desired height of the container */
+  margin: 15px;
+  overflow-y: auto; /* Enable scrollbar for the container */
 }
-.fixTableHead {
-  overflow-y: auto;
-  height: 700px;
-}
-.fixTableHead thead th {
+.table-container thead th {
   position: sticky;
   top: 0;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-th,
-td {
-  padding: 8px 15px;
-  border: 2px solid #529432;
-}
-th {
-  background: #ABDD93;
+  background-color: green;
+  color: white;
 }
 </style>

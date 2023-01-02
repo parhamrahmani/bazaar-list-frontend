@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table v-if="products.length > 0">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -19,7 +19,7 @@
       <td>{{product.brand}}</td>
       <td>{{product.category}}</td>
       <td>
-        <input type="number" class="form-control" id="inputMenge" size="2" min="0" max="1000" value="0" style="text-align: center">
+        <input type="number" class="form-control" id="inputMenge" size="2" min="1" max="1000" value="0" style="text-align: center">
       </td>
       <td>
         <select class="form-select" aria-label="Default select example" id="inputUnit">
@@ -40,6 +40,7 @@
     </tr>
     </tbody>
   </table>
+  <div v-else>No products added yet</div>
 </template>
 
 <script>
