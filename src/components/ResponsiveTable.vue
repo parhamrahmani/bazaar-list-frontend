@@ -119,8 +119,48 @@ Show The Final Shopping List  </button>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <FinalList v-bind:list="latestList">
-          </FinalList>
+          <table v-if="products.length>0">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Product Brand</th>
+              <th scope="col">Product Category</th>
+              <th scope="col">Amount </th>
+              <th scope="col">Unit</th>
+              <th scope="col">Bought</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(product, index) in products" :key="product.id" :class="{ 'bg-gray-200': product.bought }"
+                :style="{ 'text-decoration': product.bought ? 'line-through black double' : 'none', 'font-weight': product.bought ? 'bold' : 'normal' }">
+              <th>{{ index +1 }}</th>
+              <td>{{product.productName}}</td>
+              <td>{{product.brand}}</td>
+              <td>{{product.category}}</td>
+              <td>
+                <input type="number" class="form-control" id="inputMenge" size="2" min="1" max="1000" value="0" style="text-align: center">
+              </td>
+              <td>
+                <select class="form-select" aria-label="Default select example" id="inputUnit">
+                  <option selected>Select Unit </option>
+                  <option>x</option>
+                  <option>Kg</option>
+                  <option>Liter</option>
+                </select>
+              </td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" v-model="product.bought" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Product Bought
+                  </label>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div v-else>No Products Added Yet</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -133,20 +173,18 @@ Show The Final Shopping List  </button>
 <script>
 /* eslint-disable */
 import EditProductModal from '@/components/EditProductModal'
-import FinalList from '@/components/FinalList'
-
 export default {
   /* eslint-disable */
   name: 'ResponsiveTable',
-  components:{ EditProductModal, FinalList},
+  components:{ EditProductModal},
   data (){
     return{
       products: [],
       productName: '',
       productBrand: '',
       productCategory: '',
-      latestList: this.getTheLatestList(),
-      latestListId: this.getTheLatestListId(),
+      latestList: Object,
+      latestListId: Number,
       id: Number,
       editedProductName:'',
       editedProductBrand: '',
@@ -207,12 +245,12 @@ export default {
         .then(response => response.json())
         .then(result => this.latestList = result)
         .catch(error => console.log('error', error))
-      return this.latestList
+
     },
 
     /**
      * @description gets the id of the latest created shopping list
-     * @returns {this.latestListId}
+     * @returns {Number | NumberConstructor}
      */
 
     getTheLatestListId() {
@@ -314,6 +352,15 @@ export default {
       this.products.push(product)
     }))
     .catch(error => console.log('error', error))
+    fetch('http://localhost:8080/api/v1/shoppingLists/getTheLatestList', request)
+      .then(response => response.json())
+      .then(result => this.latestList = result)
+      .catch(error => console.log('error', error))
+    fetch('http://localhost:8080/api/v1/shoppingLists/getTheLatestListId', request)
+      .then(response => response.json())
+      .then(result => this.latestListId = result)
+      .catch(error => console.log('error', error))
+
 }}
 </script>
 

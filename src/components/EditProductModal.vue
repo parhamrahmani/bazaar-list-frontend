@@ -1,13 +1,10 @@
 <template>
-  <form class="form needs-validation" novalidate>
+  <form class="form">
     <div class="form-group">
       <label for="productName">Product Name</label>
       <input type="text" class="form-control mt-2"
              id="productName" placeholder="Name"
              v-model="editedProductName" required>
-    </div>
-    <div id="productNameFeedback" class="invalid-feedback">
-      Please enter a product name
     </div>
     <div>&nbsp;</div>
     <div class="form-group">
@@ -16,9 +13,6 @@
              id="productBrand" placeholder="Name"
              v-model="editedProductBrand"
       required>
-      <div id="productBrandFeedback" class="invalid-feedback">
-        Please enter a product Brand
-      </div>
     </div>
 
     <div>&nbsp;</div>
@@ -47,12 +41,9 @@
       <option>Baby</option>
       <option>Other</option>
     </select>
-    <div id="productCategoryFeedback" class="invalid-feedback">
-      Please enter a product category
-    </div>
     <div>&nbsp;</div>
+    <button type="submit" class="btn btn-primary" @click.prevent="editProduct(selectedId)" data-bs-dismiss="modal">Save changes</button>
   </form>
-  <button type="button" class="btn btn-primary" @click="editProduct(selectedId)" data-bs-dismiss="modal">Save changes</button>
 </template>
 
 <script>
@@ -76,8 +67,6 @@ export default {
      */
 
     editProduct(id){
-      const valid = this.validate();
-      if(valid) {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         if(this.editedProductName !== "" && this.editedProductBrand !== "" && this.editedProductCategory !== "")
@@ -100,32 +89,7 @@ export default {
           .then(result => console.log(result))
           .catch(error => console.log('error', error));
         window.location.reload() }
-      }
-    },
-
-    /**
-     * @description validates the input values
-     */
-
-    validate(){
-      let valid = true
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll('.needs-validation')
-
-      // Loop over them and prevent submission
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            valid = false
-            event.preventDefault()
-            event.stopPropagation()
-          }
-
-          form.classList.add('was-validated')
-        }, false)
-      })
-      return valid
-    },
+    }
   }
 }
 </script>

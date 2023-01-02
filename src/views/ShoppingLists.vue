@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <form class="form needs-validation" novalidate>
+  <form class="form">
   <div>&nbsp;</div>
   <div>&nbsp;</div>
   <h4>Load A Shopping List</h4>
@@ -48,9 +48,6 @@
                       <input type="text" class="form-control" id="listname"
                              placeholder="Please enter a new list name"
                              v-model="editedListName" required>
-                    </div>
-                    <div id="validationListName" class="invalid-feedback">
-                      Please enter a list name
                     </div>
                     <div class="form-group mb-4">
                 <textarea class="form-control" id="message" name="message"
@@ -103,8 +100,7 @@ export default {
      */
 
    editList(id){
-      const valid = this.validate()
-      if(valid){
+
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -124,7 +120,7 @@ export default {
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
           window.location.reload()
-        }}},
+        }},
     /***
      * @description deletes the selected shopping list
      * @param id --> id of the list to be deleted
@@ -141,25 +137,6 @@ export default {
         .catch(error => console.log('error', error));
       window.location.reload()
 
-    },
-    validate(){
-      let valid = true
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      const forms = document.querySelectorAll('.needs-validation')
-
-      // Loop over them and prevent submission
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            valid = false
-            event.preventDefault()
-            event.stopPropagation()
-          }
-
-          form.classList.add('was-validated')
-        }, false)
-      })
-      return valid
     }
   },
   mounted () {
