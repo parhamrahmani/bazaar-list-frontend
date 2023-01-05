@@ -5,109 +5,109 @@
   <div>&nbsp;</div>
   <div>&nbsp;</div>
   <div class="row">
-        <div class="card-header">
-          <h5> {{ latestList.listName }} </h5>
-        </div>
-    <form class="form needs-validation" novalidate>
-        <table class="table" style="margin: 32px; width: 97%">
-          <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Product Id</th>
-            <th scope="col">Product Name</th>
-            <th scope="col">Product Brand</th>
-            <th scope="col">Category</th>
-            <th scope="col">Options</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr  v-for="(product,index) in products" :key="product.id">
-            <th> {{ index + 1 }}</th>
-            <th>{{ product.id}}</th>
-            <td>{{product.productName}}</td>
-            <td>{{product.brand}}</td>
-            <td>{{product.category}}</td>
-              <td>
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                  <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas"
-                          :data-bs-target="'#offcanvasExample' + index" aria-controls="offcanvasExample">Edit</button>
-                  <button type="button" class="btn btn-danger"  @click="deleteProduct(product.id)">Delete</button>
-                </div>
-                <div class="offcanvas offcanvas-start" tabindex="-1" :id="'offcanvasExample' + index"
-                     aria-labelledby="offcanvasExampleLabel">
-                  <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasLabel">Edit Product {{ product.id }} In Your List</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                  </div>
-                  <div class="offcanvas-body">
-                    <div>&nbsp;</div>
-                    <EditProductModal :selectedId="product.id"></EditProductModal>
-                  </div>
-                </div>
-            </td>
-          </tr>
-          <tr class="input-row">
-            <th></th>
-            <th></th>
-            <td>
-              <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Name" aria-label="Username"
-                     aria-describedby="addon-wrapping" id="productName" v-model="productName" style="margin: 5px ;
+    <div class="card-header">
+      <h5> {{ latestList.listName }} </h5>
+    </div>
+    <form class="form needs-validation" novalidate >
+      <table class="table" style="margin: 32px; width: 97%">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product Id</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Product Brand</th>
+          <th scope="col">Category</th>
+          <th scope="col">Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  v-for="(product,index) in products" :key="product.id">
+          <th> {{ index + 1 }}</th>
+          <th>{{ product.id}}</th>
+          <td>{{product.productName}}</td>
+          <td>{{product.brand}}</td>
+          <td>{{product.category}}</td>
+          <td>
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas"
+                      :data-bs-target="'#offcanvasExample' + index" aria-controls="offcanvasExample">Edit</button>
+              <button type="button" class="btn btn-danger"  @click="deleteProduct(product.id)">Delete</button>
+            </div>
+            <div class="offcanvas offcanvas-start" tabindex="-1" :id="'offcanvasExample' + index"
+                 aria-labelledby="offcanvasExampleLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasLabel">Edit Product {{ product.id }} In Your List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <div>&nbsp;</div>
+                <EditProductModal :selectedId="product.id"></EditProductModal>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="input-row">
+          <th></th>
+          <th></th>
+          <td>
+            <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Name" aria-label="Username"
+                   aria-describedby="addon-wrapping" id="productName" v-model="productName" style="margin: 5px ;
                      width: 420px" required>
-              <div id="productNameFeedback" class="invalid-feedback">
-                Please enter a product name
-              </div>
-            </td>
-            <td>
-              <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Brand" aria-label="Username"
-                     aria-describedby="addon-wrapping2" id="productBrand" v-model="productBrand" style="margin: 5px ;
+            <div id="productNameFeedback" class="invalid-feedback">
+              Please enter a product name
+            </div>
+          </td>
+          <td>
+            <input type="text" class="form-control-col-sm-6" placeholder="Enter Product Brand" aria-label="Username"
+                   aria-describedby="addon-wrapping2" id="productBrand" v-model="productBrand" style="margin: 5px ;
                     width: 420px" required>
-              <div id="productBrandFeedback" class="invalid-feedback">
-                Please enter a brand
-              </div>
-            </td>
-            <td>
-              <select class="form-select" aria-label="Default select example" id="inputCategory"
-                      v-model="productCategory" style="margin-left: 30px;width: 420px" required>
-                <option>Vegetables</option>
-                <option>Baking</option>
-                <option>Fruit</option>
-                <option>Beverage</option>
-                <option>Bread</option>
-                <option>Breakfast</option>
-                <option>Dry</option>
-                <option>Sweets</option>
-                <option>Snack</option>
-                <option>Canned</option>
-                <option>Foodstuff</option>
-                <option>Condiment</option>
-                <option>Dairy</option>
-                <option>Health</option>
-                <option>Coffee</option>
-                <option>Tea</option>
-                <option>Frozen</option>
-                <option>Home</option>
-                <option>Pet</option>
-                <option>Baby</option>
-                <option>Other</option>
-              </select>
-              <div id="productCategoryFeedback" class="invalid-feedback">
-                Please enter a category
-              </div>
-            </td>
-            <td>
-              <button type="submit"
-                      class="btn btn-primary" @click="addProduct" >Add a Product</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+            <div id="productBrandFeedback" class="invalid-feedback">
+              Please enter a brand
+            </div>
+          </td>
+          <td>
+            <select class="form-select" aria-label="Default select example" id="inputCategory"
+                    v-model="productCategory" style="margin-left: 30px;width: 420px" required>
+              <option>Vegetables</option>
+              <option>Baking</option>
+              <option>Fruit</option>
+              <option>Beverage</option>
+              <option>Bread</option>
+              <option>Breakfast</option>
+              <option>Dry</option>
+              <option>Sweets</option>
+              <option>Snack</option>
+              <option>Canned</option>
+              <option>Foodstuff</option>
+              <option>Condiment</option>
+              <option>Dairy</option>
+              <option>Health</option>
+              <option>Coffee</option>
+              <option>Tea</option>
+              <option>Frozen</option>
+              <option>Home</option>
+              <option>Pet</option>
+              <option>Baby</option>
+              <option>Other</option>
+            </select>
+            <div id="productCategoryFeedback" class="invalid-feedback">
+              Please enter a category
+            </div>
+          </td>
+          <td>
+            <button type="submit"
+                    class="btn btn-primary" @click="addProduct();get(latestListId)" >Add a Product</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </form>
   </div>
   <div>&nbsp;</div>
   <div>&nbsp;</div>
   <!-- Button trigger modal -->
   <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-Show The Final Shopping List  </button>
+    Show The Final Shopping List  </button>
 
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -196,7 +196,7 @@ export default {
   methods: {
 
     /**
-     * @description adds Products to the recentn created Shopping List
+     * @description adds Products to the recently created Shopping List
      */
 
     addProduct() {
@@ -206,63 +206,28 @@ export default {
         myHeaders.append("Content-Type", "application/json");
         if(this.productName !== "" && this.productBrand !== "" && this.productCategory !== "")
         {
-        const raw = JSON.stringify({
-          "productName": this.productName,
-          "brand": this.productBrand,
-          "category": this.productCategory,
-          "shoppingList": this.latestList
-        });
+          const raw = JSON.stringify({
+            "productName": this.productName,
+            "brand": this.productBrand,
+            "category": this.productCategory,
+            "shoppingList": this.latestList
+          });
 
-        const requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
+          const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
 
-        fetch("http://localhost:8080/api/v1/products/", requestOptions)
-          .then(response => response.json())
-          .then(result => console.log(result))
-          .then(result => this.products.push(result))
-          .catch(error => console.log('error', error));
-          window.location.reload()
+          fetch("http://localhost:8080/api/v1/products/", requestOptions)
+            .then(response => response.json())
+            .then(result => console.log(result))
+            .then(result => this.products.push(result))
+            .catch(error => console.log('error', error));
+          //window.location.reload()
 
         } }
-    },
-
-    /**
-     * @description gets the recent created shopping list
-     *
-     * @returns {this.latestList}
-     */
-
-    getTheLatestList() {
-      const request = {
-        method: 'GET',
-        redirect: 'follow'
-      }
-      fetch('http://localhost:8080/api/v1/shoppingLists/getTheLatestList', request)
-        .then(response => response.json())
-        .then(result => this.latestList = result)
-        .catch(error => console.log('error', error))
-
-    },
-
-    /**
-     * @description gets the id of the latest created shopping list
-     * @returns {Number | NumberConstructor}
-     */
-
-    getTheLatestListId() {
-      const request = {
-        method: 'GET',
-        redirect: 'follow'
-      }
-      fetch('http://localhost:8080/api/v1/shoppingLists/getTheLatestListId', request)
-        .then(response => response.json())
-        .then(result => this.latestListId = result)
-        .catch(error => console.log('error', error))
-      return this.latestListId
     },
 
     /***
@@ -334,24 +299,24 @@ export default {
         }, false)
       })
       return valid
-    }
     },
+  },
 
 
   /**
    *  @description gets the products that were recently added to the recently created shopping list
    */
   mounted(){
-  const request = {
-    method: 'GET',
-    redirect: 'follow'
-  }
-  fetch('http://localhost:8080/api/v1/products//findProductsInLatestShoppingListId', request)
-    .then(response => response.json())
-    .then(result => result.forEach(product => {
-      this.products.push(product)
-    }))
-    .catch(error => console.log('error', error))
+    const request = {
+      method: 'GET',
+      redirect: 'follow'
+    }
+   fetch('http://localhost:8080/api/v1/products//findProductsInLatestShoppingListId', request)
+      .then(response => response.json())
+      .then(result => result.forEach(product => {
+        this.products.push(product)
+      }))
+      .catch(error => console.log('error', error))
     fetch('http://localhost:8080/api/v1/shoppingLists/getTheLatestList', request)
       .then(response => response.json())
       .then(result => this.latestList = result)
@@ -360,8 +325,7 @@ export default {
       .then(response => response.json())
       .then(result => this.latestListId = result)
       .catch(error => console.log('error', error))
-
-}}
+  }}
 </script>
 
 
