@@ -96,7 +96,7 @@
           </td>
           <td>
             <button type="submit"
-                    class="btn btn-primary" @click="addProduct();get(latestListId)" >Add a Product</button>
+                    class="btn btn-primary" @click="addProduct()" >Add a Product</button>
           </td>
         </tr>
         </tbody>
@@ -225,7 +225,7 @@ export default {
             .then(result => console.log(result))
             .then(result => this.products.push(result))
             .catch(error => console.log('error', error));
-          //window.location.reload()
+
 
         } }
     },
@@ -274,7 +274,7 @@ export default {
         .then(response => response.json())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
-      window.location.reload()
+      
 
     },
     /**
